@@ -4,7 +4,7 @@ var rows = 5;
 var columns = 5;
 var colors = ["#EEE4DA", "#F2B179", "#f59575"];
 var extraColor = "#EDC22E";
-var xColor = "#F2D64B";
+var xColor = "#fe3d3d";
 
 window.onload = function() {
     highScore = localStorage.getItem("highScore") || 0;
@@ -74,7 +74,7 @@ function mergeTiles(r, c) {
     board[r][c].value = sum;
 
     // Nếu giá trị mới > 500, đổi sang màu thứ 5
-    if (sum > 180) {
+    if (sum > 250) {
         board[r][c].color = xColor;
     }
 
@@ -98,15 +98,11 @@ function mergeTiles(r, c) {
 }
 
 function generateRandomValue() {
-    if (score > 800) {
-        let values = [16, 32];
+    if (score > 1000) {
+        let values = [4, 8, 16];
         return values[Math.floor(Math.random() * values.length)];
     }
     if (score > 300) {
-        let values = [8, 16];
-        return values[Math.floor(Math.random() * values.length)];
-    }
-    if (score > 150) {
         let values = [4, 8];
         return values[Math.floor(Math.random() * values.length)];
     }
