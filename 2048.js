@@ -7,6 +7,8 @@ var extraColor = "#EDC22E";
 var xColor = "#F2D64B";
 
 window.onload = function() {
+    highScore = localStorage.getItem("highScore") || 0;
+    document.getElementById("high-score").innerText = highScore;
     setGame();
 }
 
@@ -46,6 +48,9 @@ function updateTile(tile, cell, r, c) {
     tile.dataset.value = cell.value;
 }
 
+let highScore = localStorage.getItem("highScore") ? parseInt(localStorage.getItem("highScore")) : 0;
+document.getElementById("high-score").innerText = highScore;
+
 function mergeTiles(r, c) {
     let cell = board[r][c];
     let queue = [[r, c]];
@@ -76,6 +81,14 @@ function mergeTiles(r, c) {
     // Cập nhật điểm số
     score = board.flat().reduce((acc, tile) => acc + tile.value, 0);
     document.getElementById("score").innerText = score;
+
+    // Cập nhật high score nếu cần
+    if (score > highScore) {
+        highScore = score;
+        localStorage.setItem("highScore", highScore);
+    }
+    document.getElementById("high-score").innerText = highScore;
+
 
     // Nếu tổng điểm > 3000, thêm màu thứ 4 vào game
     if (score > 1000 && !colors.includes(extraColor)) colors.push(extraColor);
