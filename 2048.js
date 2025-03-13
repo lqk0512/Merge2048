@@ -123,6 +123,7 @@ function restartGame() {
     document.getElementById("game-over-box").classList.add("hidden");
     score = 0;
     document.getElementById("score").innerText = score;
+    colors = ["#EEE4DA", "#F2B179", "#f59575"];
     setGame();
 }
 
