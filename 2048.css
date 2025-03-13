@@ -1,0 +1,82 @@
+body {
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    background-color: #faf8ef;
+    margin: 0;
+    padding: 0;
+}
+
+#board {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr); /* Chia đều 5 cột */
+    grid-template-rows: repeat(5, 1fr); /* Chia đều 5 hàng */
+    gap: 5px; /* Khoảng cách giữa các ô */
+    background-color: #bbada0;
+    padding: 10px;
+    width: 420px; /* Đảm bảo vừa khung */
+    height: 420px; /* Đảm bảo vừa khung */
+    margin: auto;
+}
+
+.tile {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: bold;
+    border-radius: 5px;
+    width: 80px;  /* Đảm bảo kích thước cố định */
+    height: 80px;
+    box-sizing: border-box; /* Tránh tràn kích thước */
+}
+
+
+
+/* Màu sắc cho các ô */
+.red {
+    background-color: #eee4da;
+    color: #727371;
+}
+
+.green {
+    background-color: #ece0ca;
+    color: #727371;
+}
+
+.blue {
+    background-color: #f4b17a;
+    color: white;
+}
+
+.yellow {
+    background-color: #f59575;
+    color: white;
+}
+
+/* Định dạng đường viền để hiển thị ô cùng màu nối liền */
+.tile {
+    border: 5px solid #bbada0;
+}
+
+.tile.merged {
+    transform: scale(1.1);
+}
+
+.tile.no-border-top {
+    border-top: none;
+}
+.tile.no-border-bottom {
+    border-bottom: none;
+}
+.tile.no-border-left {
+    border-left: none;
+}
+.tile.no-border-right {
+    border-right: none;
+}
+
+.score-board {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
