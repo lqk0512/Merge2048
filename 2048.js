@@ -4,6 +4,7 @@ var rows = 5;
 var columns = 5;
 var colors = ["#EEE4DA", "#F2B179", "#f59575"];
 var extraColor = "#EDC22E";
+var xColor = "#F2D64B";
 
 window.onload = function() {
     setGame();
@@ -50,7 +51,7 @@ function mergeTiles(r, c) {
     let queue = [[r, c]];
     let visited = new Set([`${r}-${c}`]);
     let sum = cell.value;
-    
+
     while (queue.length > 0) {
         let [x, y] = queue.pop();
         [[1, 0], [-1, 0], [0, 1], [0, -1]].forEach(([dx, dy]) => {
@@ -63,13 +64,40 @@ function mergeTiles(r, c) {
             }
         });
     }
+
+    // Cập nhật giá trị ô chính
     board[r][c].value = sum;
+
+    // Nếu giá trị mới > 500, đổi sang màu thứ 5
+    if (sum > 180) {
+        board[r][c].color = xColor;
+    }
+
+    // Cập nhật điểm số
     score = board.flat().reduce((acc, tile) => acc + tile.value, 0);
-    if (score > 3000 && !colors.includes(extraColor)) colors.push(extraColor);
-    applyGravity();
-    renderBoard();
     document.getElementById("score").innerText = score;
 
+    // Nếu tổng điểm > 3000, thêm màu thứ 4 vào game
+    if (score > 1000 && !colors.includes(extraColor)) colors.push(extraColor);
+
+    applyGravity();
+    renderBoard();
+}
+
+function generateRandomValue() {
+    if (score > 800) {
+        let values = [16, 32];
+        return values[Math.floor(Math.random() * values.length)];
+    }
+    if (score > 300) {
+        let values = [8, 16];
+        return values[Math.floor(Math.random() * values.length)];
+    }
+    if (score > 150) {
+        let values = [4, 8];
+        return values[Math.floor(Math.random() * values.length)];
+    }
+    return Math.random() < 0.5 ? 2 : 4;
 }
 
 function applyGravity() {
@@ -81,16 +109,11 @@ function applyGravity() {
             }
         }
         for (let r = rows - 1; r >= 0; r--) {
-            if (stack.length > 0) {
-                board[r][c] = stack.shift();
-            } else {
-                let color = colors[Math.floor(Math.random() * colors.length)];
-                let value = Math.random() < 0.5 ? 2 : 4; // Ngẫu nhiên chọn 2 hoặc 4
-                board[r][c] = { value: value, color: color };
-            }
+            board[r][c] = stack.length > 0 ? stack.shift() : { value: generateRandomValue(), color: colors[Math.floor(Math.random() * colors.length)] };
         }
     }
 }
+
 
 function checkGameOver() {
     for (let r = 0; r < rows; r++) {
