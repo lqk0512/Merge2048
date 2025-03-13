@@ -74,7 +74,7 @@ function mergeTiles(r, c) {
     board[r][c].value = sum;
 
     // Nếu giá trị mới > 500, đổi sang màu thứ 5
-    if (sum > 250) {
+    if (sum > 150) {
         board[r][c].color = xColor;
     }
 
@@ -91,7 +91,7 @@ function mergeTiles(r, c) {
 
 
     // Nếu tổng điểm > 3000, thêm màu thứ 4 vào game
-    if (score > 1000 && !colors.includes(extraColor)) colors.push(extraColor);
+    if (score > 300 && !colors.includes(extraColor)) colors.push(extraColor);
 
     applyGravity();
     renderBoard();
@@ -99,10 +99,6 @@ function mergeTiles(r, c) {
 
 function generateRandomValue() {
     if (score > 1000) {
-        let values = [4, 8, 16];
-        return values[Math.floor(Math.random() * values.length)];
-    }
-    if (score > 300) {
         let values = [4, 8];
         return values[Math.floor(Math.random() * values.length)];
     }
@@ -123,6 +119,12 @@ function applyGravity() {
     }
 }
 
+function restartGame() {
+    document.getElementById("game-over-box").classList.add("hidden");
+    score = 0;
+    document.getElementById("score").innerText = score;
+    setGame();
+}
 
 function checkGameOver() {
     for (let r = 0; r < rows; r++) {
@@ -136,6 +138,8 @@ function checkGameOver() {
             }
         }
     }
-    alert("Game Over! Your score: " + score);
-    setGame();
+  
+    document.getElementById("final-score").innerText = score;
+    document.getElementById("final-high-score").innerText = highScore;
+    document.getElementById("game-over-box").classList.remove("hidden");
 }
